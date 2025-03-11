@@ -12,48 +12,71 @@
 //Inside loop check if the guess is less than the secret or greater than, accordingly tell if the guess it low or high
 //Give the option to play again 
 
- function startSecretNumberGame(){
+let playAgaintPrompt = ""
+let playAgain = ""
+const exit = ["yes", "no"]
+let userNumber
+let attemptNumber = 1
+
+//Function estUnNombre() test if the value is a number or not
+function estUnNombre(valeur) {
+	return !isNaN(valeur);
+  }
+  
+  //Function goodNumber() test if the value is a valid number 
+  function goodNumber() {
+	// Ensure that the user enters a good number
+	let userNumber;
+	do {
+	  userNumber = Number(prompt("Please enter a number between 1 and 10"));
+	  if (!estUnNombre(userNumber) || (userNumber < 1) || (userNumber > 10)) {
+		console.log("Please enter a valid number between 1 and 10 !!!");
+	  }
+	} while (!estUnNombre(userNumber) || (userNumber < 1) || (userNumber > 10));
+	return userNumber;
+  }
+
+  //Function testNumber() compare if the value of userNumber and randomNumber is equal
+  function testNumber(){
 	let userNumber
-	let attemptNumber = 1
 	const randomNumber = Math.floor(Math.random() * 10) + 1
-	const tab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-	console.log("***Secret Number Guessing Game***")
-	
+	do { //Test the number the user enter with the random number
+		userNumber = goodNumber()
 
-	let playAgaintPrompt = ""
-	let playAgain = ""
-	const exit = ["yes", "no"]
-	
-		do{ //Ask if the user want to play again
-			do { //Test the number the user enter with the random number
-				do{ //Ensure that the user enter the good nnumber
-					userNumber = Number(prompt("Please enter the number between 1 and 10"))
-				}while(!tab.includes(userNumber))
-
-				if (userNumber === randomNumber) {
-					console.log("You Win !! You found the number !!!", userNumber)
-					console.log("The number of attempts is : ", attemptNumber)
-				}else if (userNumber > randomNumber) {
-					console.log("The number you find is under")
-				}else{
-					console.log("The number you find is above")
-				}
-				attemptNumber += 1
-			} while (userNumber !== randomNumber)
-
-			 playAgaintPrompt = prompt("Do you want to play again ? (yes/no)")
-			 playAgain = playAgaintPrompt ? playAgaintPrompt.toLocaleLowerCase() : "no"
-			 //playAgain = userChoicePrompt.toLocaleLowerCase()
-			 if (!exit.includes(playAgain)) {
-				 console.log("Please enter the correct word !!!")
-			 }
-		}while(!exit.includes(playAgain))
-	
-		if (playAgain === "yes") {
-			startSecretNumberGame()
+		if (userNumber === randomNumber) {
+			console.log("You Win !! You found the number !!!", userNumber)
+			console.log("The number of attempts is : ", attemptNumber)
+		}else if (userNumber > randomNumber) {
+			console.log("The number you find is under")
 		}else{
-			console.log("***Thanks for playing! See you next time***")
+			console.log("The number you find is above")
 		}
+		attemptNumber += 1
+	} while (userNumber !== randomNumber)
+  }
+
+  //Function playAgain1() test if you want to play again
+  function playAgain1(){
+	do{ //Ask if the user want to play again
+		let test = testNumber()
+		 playAgaintPrompt = prompt("Do you want to play again ? (yes/no)")
+		 playAgain = playAgaintPrompt ? playAgaintPrompt.toLocaleLowerCase() : "no"
+		 if (!exit.includes(playAgain)) {
+			 console.log("Please enter the correct word !!!")
+		 }
+	}while(!exit.includes(playAgain))
+
+	if (playAgain === "yes") {
+		startSecretNumberGame()
+	}else{
+		console.log("***Thanks for playing! See you next time***")
+	}
+  }
+
+  //Main function
+ function startSecretNumberGame(){
+	console.log("***Secret Number Guessing Game***")
+	let play = playAgain1()
  } 
 
 
